@@ -1,0 +1,23 @@
+{
+  "name": "forward-email-2-discord",
+  "description": "Forward email to discord with cloudflare email workers.",
+  "version": "1.0.0",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "start": "wrangler dev",
+    "cf-typegen": "wrangler types"
+  },
+  "dependencies": {
+    "mimetext": "^3.0.28",
+    "postal-mime": "^2.7.3",
+    "turndown": "^7.2.2"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260214.0",
+    "@types/html-to-text": "^9.0.4",
+    "@types/node": "20.8.3",
+    "@types/turndown": "^5.0.6",
+    "wrangler": "^3.114.17"
+  }
+}
