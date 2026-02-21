@@ -7,7 +7,7 @@
   "compatibility_flags": ["nodejs_compat_v2"],
   "send_metrics": false,
   "vars": {
-    "WEBHOOK_URL": "https://discord.com/api/webhooks/1474633193578696745/5jR8AOBofuJElBT0yDY4GLcp1-RW0RRULqx1Db7y572dsDDd_WG7P8TSheh3GHYXwd-g",
+    "WEBHOOK_URL": "",
   },
   "observability": {
     "logs": {
