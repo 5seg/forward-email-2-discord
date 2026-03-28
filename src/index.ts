@@ -4,6 +4,7 @@ import TurndownService from "turndown";
 import { createMimeMessage } from "mimetext";
 import PostalMime from "postal-mime";
 import { extractDiscordVerifyLink } from "./extracter";
+import { convert } from "html-to-text";
 
 interface ForwardableEmailMessage {
   readonly from: string;
@@ -54,7 +55,7 @@ export default {
 
     const content: string | undefined = email.html
       ? //@ts-ignore
-        converter.turndown(email.html)
+        convert(email.html)
       : email.text;
     console.log(`content: ` + content);
 
