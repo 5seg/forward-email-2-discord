@@ -1,8 +1,10 @@
-const extractLinks = (markdown: string) => {
-  const regex = /\[(.*?)\]\((.*?)\s?(?:"(.*?)")?\)/g;
+const extractLinks = (str: string) => {
+  const regex = /([^\r\n]+)\r?\n\[(https?:\/\/[^\]\r\n]+)\]/g;
   const links = [];
   let match;
-  while ((match = regex.exec(markdown)) !== null) {
+  while ((match = regex.exec(str)) !== null) {
+    // for inspect
+    // console.log(match[1], "\n", match[2]);
     if (match[1].length <= 0) continue;
     if (match[1].startsWith("![")) continue;
     links.push([match[1], match[2]]);
@@ -10,7 +12,12 @@ const extractLinks = (markdown: string) => {
   return links;
 };
 
-export const extractDiscordVerifyLink = (markdown: string) => {
-  const result = extractLinks(markdown).find((x) => x[0] === "ログインを認証");
+export const extractDiscordVerifyLink = (str: string) => {
+  const result_ = extractLinks(str).find((x) => x[0] === "ログインを認証");
+  const result = extractLinks(str).filter((arr) => {
+    if (arr[0] === "ログインを認証") return true;
+    if (arr[0] === "Verify Email") return true;
+    return false;
+  });
   return result ? result[1] : null;
 };

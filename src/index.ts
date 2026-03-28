@@ -3,7 +3,7 @@ import { EmailMessage } from "cloudflare:email"; //TYPESCRIPT SAYS cloudflare:em
 import TurndownService from "turndown";
 import { createMimeMessage } from "mimetext";
 import PostalMime from "postal-mime";
-import { extractDiscordVerifyLink } from "./extracter";
+import { extractDiscordVerifyLink } from "./extractor";
 import { convert } from "html-to-text";
 
 interface ForwardableEmailMessage {
@@ -60,7 +60,13 @@ export default {
     console.log(`content: ` + content);
 
     if (email.from?.address === "noreply@discord.com") {
-      if (email.subject!.endsWith("メールアドレスを確認してください")) {
+      const subject = email.subject!;
+      if (
+        subject.endsWith("あなたに言及しました") ||
+        subject.endsWith("見逃しました")
+      )
+        return;
+      if (subject.endsWith("メールアドレスを確認してください")) {
         const verifyLink = extractDiscordVerifyLink(content ?? "");
         if (verifyLink) {
           await fetch(env.WEBHOOK_URL, {
