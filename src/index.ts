@@ -1,7 +1,5 @@
 //@ts-ignore
 import { EmailMessage } from "cloudflare:email"; //TYPESCRIPT SAYS cloudflare:email IS NOT DEFINED. WHY??????
-import TurndownService from "turndown";
-import { createMimeMessage } from "mimetext";
 import PostalMime from "postal-mime";
 import { extractDiscordVerifyLink } from "./extractor";
 import { convert } from "html-to-text";
@@ -22,36 +20,7 @@ interface ForwardableEmailMessage {
 
 export default {
   async email(message: ForwardableEmailMessage, env: any, context: any) {
-    const converter = new TurndownService();
-    const Noisy_Titles = ["あなたに言及しました"];
-
     const email = await new PostalMime().parse(message.raw);
-
-    for (const title of Noisy_Titles) {
-      if (email.subject!.endsWith(title)) {
-        const msg = createMimeMessage();
-        msg.setHeader("In-Reply-To", message.headers.get("Message-ID")!);
-        msg.setSender({
-          name: "Please don't send email to me.",
-          addr: message.to,
-        });
-        msg.setRecipient(message.from);
-        msg.setSubject("Please don't send email to me.");
-        msg.addMessage({
-          contentType: "text/plain",
-          data: "Fuck you",
-        });
-
-        const replyMessage = new EmailMessage(
-          message.to,
-          message.from,
-          msg.asRaw(),
-        );
-
-        await message.reply(replyMessage);
-        return;
-      }
-    }
 
     const content: string | undefined = email.html
       ? //@ts-ignore
