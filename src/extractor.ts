@@ -13,7 +13,6 @@ const extractLinks = (str: string) => {
 };
 
 export const extractDiscordVerifyLink = (str: string) => {
-  const result_ = extractLinks(str).find((x) => x[0] === "ログインを認証");
   const result = extractLinks(str).filter((arr) => {
     if (arr[0] === "ログインを認証") return true;
     if (arr[0] === "Verify Email") return true;
